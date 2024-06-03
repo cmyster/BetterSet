@@ -1,0 +1,4 @@
+.vim*
+.vscode*
+gen*
+test.csv
