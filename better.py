@@ -24,12 +24,13 @@ generated.
 ['5', '-', '2', '*', '2', '-', '3', '/', '2', [0, 2]]
 
 TODO:
-1. Instead of picking the top performing DNAs, use logarithmic distribution to have of
-better-performing DNAs and less of the less-performing ones.
+1. Instead of picking the top performing DNAs, use logarithmic distribution to have more of the
+   better-performing DNAs and less of the less-performing ones.
 2. Functions wants to live in their own files.
 3. Calculations are linear:
     a. Some functions can be delegated to different threads. This needs a waiter function.
     b. Some calculations should be vectorized.
+4. Parts of the DNA can also be duplicated and reduced in size.
 """
 
 import settings as S
@@ -83,10 +84,10 @@ def valid(dna):
     if health >= S.SET_HEALTH:
         return True
 
-def get_dna():
+def get_dna(member):
     """
     param: returns a valid dna.
-    type: None
+    type: int
     return: list[str,...,[int]]
     """
     while True:
@@ -105,6 +106,7 @@ def get_dna():
         dna.pop()
         dna.append(key)
         if valid(dna):
+            print("Generated DNA: " + str(member + 1) + " out of: " + str(S.POPULATION_SIZE))
             return dna
 
 def create_folder(name, index):
@@ -174,7 +176,7 @@ def mix_dna(temp_dna, index_to_mix, generation):
         donor_dna = list(dna_file.read().split(','))
         dna_file.close()
     # How many letters and operators we are going to mix.
-    cross_length = randint(S.CROSSOVER_MIN_LENGTH, S.CROSSOVER_MAX_LENGTH) * 2
+    cross_length = randint(S.CHANGE_MIN_LENGTH, S.CHANGE_MAX_LENGTH) * 2
     start_index_receiver = randrange(0, (len(temp_dna) - 1) - cross_length, 2)
     start_index_donor = randrange(0, (len(donor_dna) - 1) - cross_length, 2)
     for index in range(cross_length - 1):
@@ -214,12 +216,12 @@ def complete_next_generation(generation, top_scores_length):
     for index_to_complete in range(top_scores_length, S.POPULATION_SIZE - 1):
         print("Completing DNA: " + str(index_to_complete) + " out of: " + str(S.POPULATION_SIZE))
         with open(S.GEN_FOLDER + str(generation + 1) + '/dna_' + str(index_to_complete), 'w') as dna_file:
-            dna_file.write(str(get_dna()))
+            dna_file.write(str(get_dna(index_to_complete)))
             dna_file.close()
     for member in range(S.POPULATION_SIZE):
         if not path.exists(S.GEN_FOLDER + str(generation) + '/dna_' + str(member)):
             with open(S.GEN_FOLDER + str(generation + 1) + '/dna_' + str(member), 'w') as dna_file:
-                dna_file.write(str(get_dna()))
+                dna_file.write(get_dna(str(generation)))
                 dna_file.close()            
 
 def main():
@@ -233,8 +235,7 @@ def main():
     gen_folder = create_folder(S.GEN_FOLDER, 0)
     print("Creating cohort for generation 0")
     for member in range(S.POPULATION_SIZE):
-        dna = get_dna()
-        print("Generated DNA: " + str(member + 1) + " out of: " + str(S.POPULATION_SIZE))
+        dna = get_dna(member)
         with open(gen_folder + '/dna_' + str(member), 'w') as dna_file:
             dna_file.write(str(dna))
             dna_file.close()
