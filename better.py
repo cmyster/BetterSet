@@ -32,7 +32,7 @@ better-performing DNAs and less of the less-performing ones.
     b. Some calculations should be vectorized.
 """
 
-import settings as s
+import settings as S
 
 from math import log
 from numpy import mean
@@ -40,7 +40,7 @@ from random import getrandbits, randint, randrange
 from shutil import rmtree
 from os import mkdir, path
 
-if not path.exists(s.TEST_FILE):
+if not path.exists(S.TEST_FILE):
     print("Test file not found.")
     exit(1)
 
@@ -55,7 +55,7 @@ def calculate_digit(dna):
     key=test_dna[len(test_dna) - 1]
     test_dna.pop()
     for index in key:
-        test_dna[index] = str(randint(s.MINIMUM_LETTER_VALUE, s.MAXIMUM_LETTER_VALUE))
+        test_dna[index] = str(randint(S.MINIMUM_LETTER_VALUE, S.MAXIMUM_LETTER_VALUE))
     return round(eval(''.join(test_dna)))
 
 def valid(dna):
@@ -66,21 +66,21 @@ def valid(dna):
     """
     test_dna = dna.copy()
     key = test_dna[len(test_dna)-1]
-    results = [0] * (s.MAXIMUM_DIGIT + 1) # Part of the health-check is to see how many repetitions we got.
+    results = [0] * (S.MAXIMUM_DIGIT + 1) # Part of the health-check is to see how many repetitions we got.
     health = 0
-    for item in range(s.SET_SIZE):
+    for item in range(S.SET_SIZE):
         if len(key)-1 > 0:
             result = calculate_digit(test_dna)
         else:
             return False
-        if result >= s.MINIMUM_DIGIT and result <= s.MAXIMUM_DIGIT:
+        if result >= S.MINIMUM_DIGIT and result <= S.MAXIMUM_DIGIT:
             health += 1
             results[result] += 1
-    if sum(results) > s.SET_HEALTH:
+    if sum(results) > S.SET_HEALTH:
         for index in range(len(results) - 1):
             if results[index] > 1:
                 health -= 1
-    if health >= s.SET_HEALTH:
+    if health >= S.SET_HEALTH:
         return True
 
 def get_dna():
@@ -92,14 +92,14 @@ def get_dna():
     while True:
         dna = []
         key = []
-        dna_length = randint(s.DNA_MIN_LENGTH, s.DNA_MAX_LENGTH)
+        dna_length = randint(S.DNA_MIN_LENGTH, S.DNA_MAX_LENGTH)
         for letter in range(dna_length):
             if letter % 2 == 0:
-                if randint(1, 100) <= s.RANDOM_CHANCE:
+                if randint(1, 100) <= S.RANDOM_CHANCE:
                     key.append(letter) # The letter at this index would later be randomly generated.
-            digit = randint(s.MINIMUM_LETTER_VALUE, s.MAXIMUM_LETTER_VALUE)
-            dna.append(str(digit)) # Saving as a string so we can use eval later.
-            operator = s.OPERATORS[getrandbits(2)]
+            digit = randint(S.MINIMUM_LETTER_VALUE, S.MAXIMUM_LETTER_VALUE)
+            dna.append(str(digit)) # Saving as a string S. we can use eval later.
+            operator = S.OPERATORS[getrandbits(2)]
             dna.append(operator)
         # Last element is an operator and we want to remove it now.
         dna.pop()
@@ -126,14 +126,14 @@ def assess(sum_set):
     return: int
     """
     score = 0
-    with open(s.TEST_FILE, 'r') as test_file:
+    with open(S.TEST_FILE, 'r') as test_file:
         for test_set in test_file:
             for digit in sum_set:
                 if digit in test_set:
                     score += 1
     test_file.close()
-    # Adding a bias here so that the score will be lower if the set had low uniqueness.
-    score = score * log(len(sum_set) + 1 ,s.SET_LENGTH)
+    # Adding a bias here S. that the score will be lower if the set had low uniqueness.
+    score = score * log(len(sum_set) + 1 ,S.SET_LENGTH)
     return int(score)
 
 def get_top_scores(scores):
@@ -145,7 +145,7 @@ def get_top_scores(scores):
     # We need to keep the top score and its index.
     temp_scores = scores.copy()
     top_scores = []
-    for top_score in range(int((s.POPULATION_SIZE * s.ASCENDING) // 100)):
+    for top_score in range(int((S.POPULATION_SIZE * S.ASCENDING) // 100)):
         top_scores.append(temp_scores.index(max(temp_scores)))
         temp_scores[temp_scores.index(max(temp_scores))] = 0
     return top_scores
@@ -159,7 +159,7 @@ def mutate_dna(temp_dna):
     index_to_change = randrange(0, len(temp_dna) - 1, 2)
     current_value = temp_dna[index_to_change]
     while True:
-        new_value = str(randint(s.MINIMUM_LETTER_VALUE, s.MAXIMUM_LETTER_VALUE))
+        new_value = str(randint(S.MINIMUM_LETTER_VALUE, S.MAXIMUM_LETTER_VALUE))
         if new_value != current_value:
             temp_dna[index_to_change] = new_value
             break
@@ -170,11 +170,11 @@ def mix_dna(temp_dna, index_to_mix, generation):
     type: list[str,...,[int]], int, int
     return: None
     """
-    with open(s.GEN_FOLDER + str(generation) + '/dna_' + str(index_to_mix), 'r') as dna_file:
+    with open(S.GEN_FOLDER + str(generation) + '/dna_' + str(index_to_mix), 'r') as dna_file:
         donor_dna = list(dna_file.read().split(','))
         dna_file.close()
     # How many letters and operators we are going to mix.
-    cross_length = randint(s.CROSSOVER_MIN_LENGTH, s.CROSSOVER_MAX_LENGTH) * 2
+    cross_length = randint(S.CROSSOVER_MIN_LENGTH, S.CROSSOVER_MAX_LENGTH) * 2
     start_index_receiver = randrange(0, (len(temp_dna) - 1) - cross_length, 2)
     start_index_donor = randrange(0, (len(donor_dna) - 1) - cross_length, 2)
     for index in range(cross_length - 1):
@@ -189,18 +189,18 @@ def ascend_dna(generation_top_scores, generation):
     """
     loop_index = 0
     for current_gen_index in generation_top_scores:
-        with open(s.GEN_FOLDER + str(generation) + '/dna_' + str(current_gen_index), 'r') as dna_file:
+        with open(S.GEN_FOLDER + str(generation) + '/dna_' + str(current_gen_index), 'r') as dna_file:
             tmp_dna = list(dna_file.read().split(','))
         dna_file.close()
-        if randint(1, 100) <= s.DNA_MUTATION_RATE:
+        if randint(1, 100) <= S.DNA_MUTATION_RATE:
             mutate_dna(tmp_dna)
-        if randint(1, 100) <= s.DNA_MIX_RATE:
+        if randint(1, 100) <= S.DNA_MIX_RATE:
             while True:
                 index_to_mix = generation_top_scores[randint(0, len(generation_top_scores) - 1)]
                 if index_to_mix != current_gen_index:
                     break
             mix_dna(tmp_dna, index_to_mix, generation)
-        with open(s.GEN_FOLDER + str(generation + 1) + '/dna_' + str(loop_index), 'w') as dna_file:
+        with open(S.GEN_FOLDER + str(generation + 1) + '/dna_' + str(loop_index), 'w') as dna_file:
             dna_file.write(str(tmp_dna))
         dna_file.close()
         loop_index += 1
@@ -211,14 +211,14 @@ def complete_next_generation(generation, top_scores_length):
     type: int, int
     return: None
     """
-    for index_to_complete in range(top_scores_length, s.POPULATION_SIZE - 1):
-        print("Completing DNA: " + str(index_to_complete) + " out of: " + str(s.POPULATION_SIZE))
-        with open(s.GEN_FOLDER + str(generation + 1) + '/dna_' + str(index_to_complete), 'w') as dna_file:
+    for index_to_complete in range(top_scores_length, S.POPULATION_SIZE - 1):
+        print("Completing DNA: " + str(index_to_complete) + " out of: " + str(S.POPULATION_SIZE))
+        with open(S.GEN_FOLDER + str(generation + 1) + '/dna_' + str(index_to_complete), 'w') as dna_file:
             dna_file.write(str(get_dna()))
             dna_file.close()
-    for member in range(s.POPULATION_SIZE):
-        if not path.exists(s.GEN_FOLDER + str(generation) + '/dna_' + str(member)):
-            with open(s.GEN_FOLDER + str(generation + 1) + '/dna_' + str(member), 'w') as dna_file:
+    for member in range(S.POPULATION_SIZE):
+        if not path.exists(S.GEN_FOLDER + str(generation) + '/dna_' + str(member)):
+            with open(S.GEN_FOLDER + str(generation + 1) + '/dna_' + str(member), 'w') as dna_file:
                 dna_file.write(str(get_dna()))
                 dna_file.close()            
 
@@ -230,23 +230,23 @@ def main():
     return: None
     """
     # Create the first generation.
-    gen_folder = create_folder(s.GEN_FOLDER, 0)
+    gen_folder = create_folder(S.GEN_FOLDER, 0)
     print("Creating cohort for generation 0")
-    for member in range(s.POPULATION_SIZE):
+    for member in range(S.POPULATION_SIZE):
         dna = get_dna()
-        print("Generated DNA: " + str(member + 1) + " out of: " + str(s.POPULATION_SIZE))
+        print("Generated DNA: " + str(member + 1) + " out of: " + str(S.POPULATION_SIZE))
         with open(gen_folder + '/dna_' + str(member), 'w') as dna_file:
             dna_file.write(str(dna))
             dna_file.close()
     # Assess each generation, get the healthiest DNAs and create the next generation.
-    for generation in range(s.GENERATIONS):
+    for generation in range(S.GENERATIONS):
         print("Working in generation: " + str(generation))
         # Create the sets for each DNA.
-        for member in range(s.POPULATION_SIZE):
-            with open(s.GEN_FOLDER + str(generation) + '/dna_' + str(member) + '_sets', 'w') as sets_file:
-                for i in range(s.SET_SIZE):
+        for member in range(S.POPULATION_SIZE):
+            with open(S.GEN_FOLDER + str(generation) + '/dna_' + str(member) + '_sets', 'w') as sets_file:
+                for i in range(S.SET_SIZE):
                     line="" 
-                    for number in range(s.SET_LENGTH):
+                    for number in range(S.SET_LENGTH):
                         line += str(calculate_digit(dna)) + ','
                     line = line[:-1] + '\n'
                     sets_file.write(line)
@@ -254,10 +254,10 @@ def main():
         # Assess the sets and get the top scores.
         generation_top_scores = []
         current_gen_folder = gen_folder # This we learned from fibonacci()
-        next_gen_folder = create_folder(s.GEN_FOLDER, generation + 1)
+        next_gen_folder = create_folder(S.GEN_FOLDER, generation + 1)
         gen_folder = next_gen_folder
         dna_scores = []
-        for current_sets_file in range(s.POPULATION_SIZE - 1):
+        for current_sets_file in range(S.POPULATION_SIZE - 1):
             with open (current_gen_folder + '/dna_' + str(current_sets_file) + '_sets', 'r') as sets_file:
                 set_scores = []
                 for set_line in sets_file:
