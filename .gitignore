@@ -1,4 +1,4 @@
 .vim*
 .vscode*
-gen*
+generation*
 test.csv
