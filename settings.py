@@ -8,9 +8,9 @@ DNA_MIN_LENGTH = 50          # Minimum length of a DNA.
 DNA_MAX_LENGTH = 100         # Maximum length of a DNA.
 
 MINIMUM_DIGIT = 1            # Minimum digit that can be generated.
-MAXIMUM_DIGIT = 50           # Maximum digit that can be generated.
-POPULATION_SIZE = 100        # How many DNA are there in a generation.
-GENERATIONS = 100            # How many generations are there in a simulation.
+MAXIMUM_DIGIT = 99           # Maximum digit that can be generated.
+POPULATION_SIZE = 200        # How many DNA are there in a generation.
+GENERATIONS = 200            # How many generations are there in a simulation.
 SET_LENGTH = 10              # How many digits in a set.
 
 """
@@ -19,7 +19,7 @@ is tested to see if it can generate a number between MINIMUM_DIGIT and MAXIMUM_D
 it is considered healthy.
 Too small a size will not give good results, and too large a size will take a very long time to generate.
 """
-SET_SIZE = 1000              # How many sets each DNA generates. Also how many tests each DNA has to pass.
+SET_SIZE = 2000              # How many sets each DNA generates. Also how many tests each DNA has to pass.
 
 OPERATORS = [
     '+', '-', '*', '/']      # 4 operators only, so we can use getrandbits(2) which is faster.
@@ -42,7 +42,7 @@ Consider that we generated a DNA that constantly guesses correctly 4 out of 5 nu
 But that 1 out of 5 is a number outside the range, so we deleted that DNA... A small amount of errors is not
 always bad.
 """
-SET_HEALTH = 980
+SET_HEALTH = 1980
 GEN_FOLDER = "generation-"   # The folder name for each generation.
 TEST_FILE = "./test.csv"     # The file that contains the test sets.
 
@@ -53,10 +53,13 @@ Parameters for generational changes:
 ASCENDING = 75               # Percentage of top DNAs that are taken from the previous generation.
 DNA_MUTATION_RATE = 1        # Percentage of the DNA that is mutated.
 DNA_MIX_RATE = 10            # Percentage of the DNAs that mix together (sort of sexual reproduction).
+DNA_DUPLICATION_RATE = 1     # Percentage of the DNAs that will have some of their instructions duplicated.
+DNA_REDUCTION_RATE = 1       # Percentage of the DNAs that will have some of their instructions removed.
 
 """
-CROSS_OVER is the process of taking a letter + operator pair (values are doubled in the function later)
-from a random DNA that was also in the generation top DNAs, and replacing it at a random spot.
+CHANGE_MIN/MAX is used when the script wants to do things like duplicating existing instructions,
+removing a length of instructions or taking some instructions from a different DNA.
+The length is a pair of a number (letter) plus an operator.
 """
-CROSSOVER_MIN_LENGTH = 1     # Minimum length of the DNA that is crossed-over.
-CROSSOVER_MAX_LENGTH = 3     # Maximum length of the DNA that is crossed-over.
+CHANGE_MIN_LENGTH = 1        # Minimum length of pairs to change.
+CHANGE_MAX_LENGTH = 3        # Maximum length of pairs to change.

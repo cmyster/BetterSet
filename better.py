@@ -35,6 +35,7 @@ TODO:
 
 import settings as S
 
+from ast import literal_eval
 from math import log
 from numpy import mean
 from random import getrandbits, randint, randrange
@@ -173,7 +174,7 @@ def mix_dna(temp_dna, index_to_mix, generation):
     return: None
     """
     with open(S.GEN_FOLDER + str(generation) + '/dna_' + str(index_to_mix), 'r') as dna_file:
-        donor_dna = list(dna_file.read().split(','))
+        donor_dna = literal_eval(dna_file.read())
         dna_file.close()
     # How many letters and operators we are going to mix.
     cross_length = randint(S.CHANGE_MIN_LENGTH, S.CHANGE_MAX_LENGTH) * 2
@@ -192,7 +193,7 @@ def ascend_dna(generation_top_scores, generation):
     loop_index = 0
     for current_gen_index in generation_top_scores:
         with open(S.GEN_FOLDER + str(generation) + '/dna_' + str(current_gen_index), 'r') as dna_file:
-            tmp_dna = list(dna_file.read().split(','))
+            tmp_dna = literal_eval(dna_file.read())
         dna_file.close()
         if randint(1, 100) <= S.DNA_MUTATION_RATE:
             mutate_dna(tmp_dna)
@@ -209,19 +210,18 @@ def ascend_dna(generation_top_scores, generation):
 
 def complete_next_generation(generation, top_scores_length):
     """
-    param: Completes the next generation with random DNAs.
+    param: Completes the population with random DNAs.
     type: int, int
     return: None
     """
     for index_to_complete in range(top_scores_length, S.POPULATION_SIZE - 1):
-        print("Completing DNA: " + str(index_to_complete) + " out of: " + str(S.POPULATION_SIZE))
         with open(S.GEN_FOLDER + str(generation + 1) + '/dna_' + str(index_to_complete), 'w') as dna_file:
             dna_file.write(str(get_dna(index_to_complete)))
             dna_file.close()
     for member in range(S.POPULATION_SIZE):
         if not path.exists(S.GEN_FOLDER + str(generation) + '/dna_' + str(member)):
             with open(S.GEN_FOLDER + str(generation + 1) + '/dna_' + str(member), 'w') as dna_file:
-                dna_file.write(get_dna(str(generation)))
+                dna_file.write(str(get_dna(generation)))
                 dna_file.close()            
 
 def main():
@@ -243,6 +243,7 @@ def main():
     for generation in range(S.GENERATIONS):
         print("Working in generation: " + str(generation))
         # Create the sets for each DNA.
+        print("Creating sets for this generation.")
         for member in range(S.POPULATION_SIZE):
             with open(S.GEN_FOLDER + str(generation) + '/dna_' + str(member) + '_sets', 'w') as sets_file:
                 for i in range(S.SET_SIZE):
@@ -253,6 +254,7 @@ def main():
                     sets_file.write(line)
             sets_file.close()
         # Assess the sets and get the top scores.
+        print("Assessing the sets and getting the top performers.")
         generation_top_scores = []
         current_gen_folder = gen_folder # This we learned from fibonacci()
         next_gen_folder = create_folder(S.GEN_FOLDER, generation + 1)
