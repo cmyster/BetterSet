@@ -8,7 +8,7 @@ DNA_MIN_LENGTH = 50          # Minimum length of a DNA.
 DNA_MAX_LENGTH = 100         # Maximum length of a DNA.
 
 MINIMUM_DIGIT = 1            # Minimum digit that can be generated.
-MAXIMUM_DIGIT = 99           # Maximum digit that can be generated.
+MAXIMUM_DIGIT = 50           # Maximum digit that can be generated.
 POPULATION_SIZE = 200        # How many DNA are there in a generation.
 GENERATIONS = 200            # How many generations are there in a simulation.
 SET_LENGTH = 10              # How many digits in a set.

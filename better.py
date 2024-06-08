@@ -20,7 +20,7 @@ Example of a test file (you can use generate_test.py):
 
 Example of a DNA:
 Pairs of numbers and operators, the last element is a list of indices that will be randomly
-generated.
+modified.
 ['5', '-', '2', '*', '2', '-', '3', '/', '2', [0, 2]]
 
 TODO:
@@ -42,23 +42,12 @@ from random import getrandbits, randint, randrange
 from shutil import rmtree
 from os import mkdir, path
 
+import create_sets as cs
+import calculate_digit as cd
+
 if not path.exists(S.TEST_FILE):
     print("Test file not found.")
     exit(1)
-
-
-def calculate_digit(dna):
-    """
-    param: returns a number from a DNA.
-    type: dna: list[str,...[int]]
-    return: int
-    """
-    test_dna = dna.copy()
-    key=test_dna[len(test_dna) - 1]
-    test_dna.pop()
-    for index in key:
-        test_dna[index] = str(randint(S.MINIMUM_LETTER_VALUE, S.MAXIMUM_LETTER_VALUE))
-    return round(eval(''.join(test_dna)))
 
 def valid(dna):
     """
@@ -72,7 +61,7 @@ def valid(dna):
     health = 0
     for item in range(S.SET_SIZE):
         if len(key)-1 > 0:
-            result = calculate_digit(test_dna)
+            result = cd.calculate_digit(test_dna)
         else:
             return False
         if result >= S.MINIMUM_DIGIT and result <= S.MAXIMUM_DIGIT:
@@ -135,7 +124,7 @@ def assess(sum_set):
                 if digit in test_set:
                     score += 1
     test_file.close()
-    # Adding a bias here S. that the score will be lower if the set had low uniqueness.
+    # Adding a bias here that the score will be lower if the set had low uniqueness.
     score = score * log(len(sum_set) + 1 ,S.SET_LENGTH)
     return int(score)
 
@@ -245,14 +234,7 @@ def main():
         # Create the sets for each DNA.
         print("Creating sets for this generation.")
         for member in range(S.POPULATION_SIZE):
-            with open(S.GEN_FOLDER + str(generation) + '/dna_' + str(member) + '_sets', 'w') as sets_file:
-                for i in range(S.SET_SIZE):
-                    line="" 
-                    for number in range(S.SET_LENGTH):
-                        line += str(calculate_digit(dna)) + ','
-                    line = line[:-1] + '\n'
-                    sets_file.write(line)
-            sets_file.close()
+            cs.create_sets(generation, dna)
         # Assess the sets and get the top scores.
         print("Assessing the sets and getting the top performers.")
         generation_top_scores = []
