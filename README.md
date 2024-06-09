@@ -20,10 +20,14 @@ instructions will eventually, given enough time, create random numbers as well i
 the given range.
 
 Example of a test file (you can use generate_test.py):
-1,2,3,4,5,6,7,8,9,10
-2,3,4,5,6,7,8,9,10,11
-3,4,5,6,7,8,9,10,11,12
-...
+
+`1,2,3,4,5,6,7,8,9,10`
+
+`2,3,4,5,6,7,8,9,10,11`
+
+`3,4,5,6,7,8,9,10,11,12`
+
+`...`
 
 Example of a 'DNA':
 Pairs of numbers and operators, the last element is a list of indices that will be randomly
