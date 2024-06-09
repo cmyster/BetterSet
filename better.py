@@ -1,37 +1,5 @@
 #!/usr/bin/python
 
-"""
-This script uses randomly created "DNA" sequences to generate sets of numbers.
-The sets will be measured against a test file and its success rate will be calculated
-as how close the generated sets were against the ones in the test file.
-Every generation, the most successful DNAs will be used, some merged, some mutated,
-to create the next generation.
-
-The end goal of the game is to create an instruction set  that will generate sets
-of numbers in predictable way. If your test files contains random numbers, then the
-instructions will eventually, given enough time, create random numbers as well in
-the given range.
-
-Example of a test file (you can use generate_test.py):
-1,2,3,4,5,6,7,8,9,10
-2,3,4,5,6,7,8,9,10,11
-3,4,5,6,7,8,9,10,11,12
-...
-
-Example of a DNA:
-Pairs of numbers and operators, the last element is a list of indices that will be randomly
-modified.
-['5', '-', '2', '*', '2', '-', '3', '/', '2', [0, 2]]
-
-TODO:
-1. Instead of picking the top performing DNAs, use logarithmic distribution to have more of the
-   better-performing DNAs and less of the less-performing ones.
-2. Calculations are linear:
-    a. Some functions can be delegated to different threads. This needs a waiter function.
-    b. Some calculations should be vectorized.
-3. Parts of the DNA can also be duplicated and/or reduced in length (repetitions).
-"""
-
 from numpy import mean
 from os import path
 from random import randint, randrange
