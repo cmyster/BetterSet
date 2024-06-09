@@ -9,8 +9,8 @@ DNA_MAX_LENGTH = 100         # Maximum length of a DNA.
 
 MINIMUM_DIGIT = 1            # Minimum digit that can be generated.
 MAXIMUM_DIGIT = 50           # Maximum digit that can be generated.
-POPULATION_SIZE = 200        # How many DNA are there in a generation.
-GENERATIONS = 200            # How many generations are there in a simulation.
+POPULATION_SIZE = 10         # How many DNA are there in a generation.
+GENERATIONS = 10             # How many generations are there in a simulation.
 SET_LENGTH = 10              # How many digits in a set.
 
 """
@@ -19,7 +19,7 @@ is tested to see if it can generate a number between MINIMUM_DIGIT and MAXIMUM_D
 it is considered healthy.
 Too small a size will not give good results, and too large a size will take a very long time to generate.
 """
-SET_SIZE = 2000              # How many sets each DNA generates. Also how many tests each DNA has to pass.
+SET_SIZE = 100               # How many sets each DNA generates. Also how many tests each DNA has to pass.
 
 OPERATORS = [
     '+', '-', '*', '/']      # 4 operators only, so we can use getrandbits(2) which is faster.
@@ -42,7 +42,7 @@ Consider that we generated a DNA that constantly guesses correctly 4 out of 5 nu
 But that 1 out of 5 is a number outside the range, so we deleted that DNA... A small amount of errors is not
 always bad.
 """
-SET_HEALTH = 1980
+SET_HEALTH = 90
 GEN_FOLDER = "generation-"   # The folder name for each generation.
 TEST_FILE = "./test.csv"     # The file that contains the test sets.
 
@@ -50,7 +50,7 @@ TEST_FILE = "./test.csv"     # The file that contains the test sets.
 """
 Parameters for generational changes:
 """
-ASCENDING = 75               # Percentage of top DNAs that are taken from the previous generation.
+ASCENDING = 50               # Percentage of top DNAs that are taken from the previous generation.
 DNA_MUTATION_RATE = 1        # Percentage of the DNA that is mutated.
 DNA_MIX_RATE = 10            # Percentage of the DNAs that mix together (sort of sexual reproduction).
 DNA_DUPLICATION_RATE = 1     # Percentage of the DNAs that will have some of their instructions duplicated.

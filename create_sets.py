@@ -1,4 +1,4 @@
-import calculate_digit as cd
+from calculate_digit import calculate_digit
 import settings as S
 
 def create_sets(generation, dna):
@@ -12,7 +12,7 @@ def create_sets(generation, dna):
             for i in range(S.SET_SIZE):
                 line="" 
                 for number in range(S.SET_LENGTH):
-                    line += str(cd.calculate_digit(dna)) + ','
+                    line += str(calculate_digit(dna)) + ','
                 line = line[:-1] + '\n'
                 sets_file.write(line)
         sets_file.close()
