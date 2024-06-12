@@ -3,6 +3,7 @@
 from numpy import mean
 from os import path
 from random import randint, randrange
+from threading import Thread
 
 import settings as S
 from create_sets import create_sets
@@ -27,18 +28,29 @@ def main():
     # Create the first generation.
     gen_folder = create_folder(S.GEN_FOLDER, 0)
     print("Creating cohort for generation 0")
-    for member in range(S.POPULATION_SIZE):
+
+    def get_dna_thread(member):
         dna = get_dna(member)
         with open(gen_folder + '/dna_' + str(member), 'w') as dna_file:
             dna_file.write(str(dna))
             dna_file.close()
+
+    threads = []
+    for member in range(S.POPULATION_SIZE):
+        thread = Thread(target=get_dna_thread, args=(member,))
+        threads.append(thread)
+        thread.start()
+
+    for thread in threads:
+        thread.join()
+
     # Assess each generation, get the healthiest DNAs and create the next generation.
     for generation in range(S.GENERATIONS):
         print("Working in generation: " + str(generation))
         # Create the sets for each DNA.
         print("Creating sets for this generation.")
         for member in range(S.POPULATION_SIZE):
-            create_sets(generation, dna)
+            create_sets(generation)
         # Assess the sets and get the top scores.
         print("Assessing the sets and getting the top performers.")
         generation_top_scores = []
