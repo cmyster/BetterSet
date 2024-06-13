@@ -51,7 +51,7 @@ def main():
         line = ""
         for j in range(length):
             line += str(cd.calculate_digit(dna)) + ","
-        print(line[:-1])    
+        print(line[:-1])
 
 
 if __name__ == "__main__":
