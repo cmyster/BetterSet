@@ -44,7 +44,7 @@ always bad.
 """
 SET_HEALTH = 90
 GEN_FOLDER = "generation-"   # The folder name for each generation.
-TEST_FILE = "./test.csv"     # The file that contains the test sets.
+TEST_FILE = "test.csv"     # The file that contains the test sets.
 
 
 """

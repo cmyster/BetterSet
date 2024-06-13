@@ -38,7 +38,7 @@ def main():
         # Create the sets for each DNA.
         print("Creating sets for this generation.")
         for member in range(S.POPULATION_SIZE):
-            create_sets(generation, dna)
+            create_sets(generation)
         # Assess the sets and get the top scores.
         print("Assessing the sets and getting the top performers.")
         generation_top_scores = []
