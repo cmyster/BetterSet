@@ -1,5 +1,6 @@
 from random import randint, getrandbits
-import is_valid
+
+from is_valid import is_valid
 import settings as S
 
 

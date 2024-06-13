@@ -4,8 +4,8 @@ from os import path
 from sys import argv
 from ast import literal_eval
 
+from calculate_digit import calculate_digit as cd
 import settings as S
-import calculate_digit as cd
 
 """
 This script gets a "DNA" file and generates a set of numbers based on the DNA.

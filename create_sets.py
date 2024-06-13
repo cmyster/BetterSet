@@ -1,6 +1,6 @@
 from ast import literal_eval
 
-import calculate_digit
+from calculate_digit import calculate_digit as cd
 import settings as S
 
 
@@ -18,7 +18,7 @@ def create_sets(generation):
             for i in range(S.SET_SIZE):
                 line = ""
                 for number in range(S.SET_LENGTH):
-                    line += str(calculate_digit(dna)) + ','
+                    line += str(cd(dna)) + ','
                 line = line[:-1] + '\n'
                 sets_file.write(line)
         sets_file.close()

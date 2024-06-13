@@ -1,5 +1,5 @@
 import settings as S
-import calculate_digit
+from calculate_digit import calculate_digit as cd
 
 
 def is_valid(dna):
@@ -14,7 +14,7 @@ def is_valid(dna):
     health = 0
     for item in range(S.SET_SIZE):
         if len(key)-1 > 0:
-            result = calculate_digit(test_dna)
+            result = cd(test_dna)
         else:
             return False
         if result >= S.MINIMUM_DIGIT and result <= S.MAXIMUM_DIGIT:

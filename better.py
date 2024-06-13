@@ -4,13 +4,14 @@ from numpy import mean
 from os import path
 
 import settings as S
-import create_sets
-import get_dna
-import create_folder
-import assess_dna
-import get_top_scores
-import ascend_dna
-import complete_next_gen
+
+from ascend_dna import ascend_dna
+from assess_dna import assess_dna
+from complete_next_gen import complete_next_gen
+from create_folder import create_folder
+from create_sets import create_sets
+from get_dna import get_dna
+from get_top_scores import get_top_scores
 
 if not path.exists(S.TEST_FILE):
     print("Test file not found.")
@@ -38,7 +39,7 @@ def main():
         # Create the sets for each DNA.
         print("Creating sets for this generation.")
         for member in range(S.POPULATION_SIZE):
-            create_sets(generation, dna)
+            create_sets(generation)
         # Assess the sets and get the top scores.
         print("Assessing the sets and getting the top performers.")
         generation_top_scores = []

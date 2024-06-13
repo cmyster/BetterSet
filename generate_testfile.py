@@ -1,4 +1,5 @@
 #!/usr/bin/python
+
 import settings as S
 from random import randint
 
