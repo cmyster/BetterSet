@@ -44,7 +44,11 @@ always bad.
 """
 SET_HEALTH = 1975
 GEN_FOLDER = "generation-"   # The folder name for each generation.
+<<<<<<< HEAD
 TEST_FILE = "test.csv"       # The file that contains the test sets.
+=======
+TEST_FILE = "test.csv"     # The file that contains the test sets.
+>>>>>>> master
 
 
 """

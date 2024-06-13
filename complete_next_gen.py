@@ -11,8 +11,12 @@ def complete_next_generation(generation, top_scores_length):
     type: int, int
     return: None
     """
+<<<<<<< HEAD
     
     def complete_dna(index_to_complete):
+=======
+    for index_to_complete in range(top_scores_length, S.POPULATION_SIZE):
+>>>>>>> master
         with open(S.GEN_FOLDER + str(generation + 1) + '/dna_' + str(index_to_complete), 'w') as dna_file:
             dna_file.write(str(get_dna(index_to_complete)))
             dna_file.close()
