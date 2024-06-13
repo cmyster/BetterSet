@@ -1,6 +1,8 @@
 from ast import literal_eval
 from random import randint, randrange
+
 import settings as S
+
 
 def mix_dna(temp_dna, index_to_mix, generation):
     """

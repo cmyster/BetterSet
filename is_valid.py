@@ -1,7 +1,8 @@
 import settings as S
-from calculate_digit import calculate_digit
+import calculate_digit
 
-def valid(dna):
+
+def is_valid(dna):
     """
     param: returns a bool for DNA health.
     type: dna: list[str,...,[int]]
@@ -9,7 +10,7 @@ def valid(dna):
     """
     test_dna = dna.copy()
     key = test_dna[len(test_dna)-1]
-    results = [0] * (S.MAXIMUM_DIGIT + 1) # Part of the health-check is to see how many repetitions we got.
+    results = [0] * (S.MAXIMUM_DIGIT + 1)  # Part of the health-check is to see how many repetitions we got.
     health = 0
     for item in range(S.SET_SIZE):
         if len(key)-1 > 0:
@@ -25,3 +26,4 @@ def valid(dna):
                 health -= 1
     if health >= S.SET_HEALTH:
         return True
+    return False

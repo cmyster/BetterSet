@@ -1,6 +1,7 @@
 from os import mkdir, path
 from shutil import rmtree
 
+
 def create_folder(name, index):
     """
     param: Generates a folder based on name and index number.

@@ -2,20 +2,20 @@
 
 from numpy import mean
 from os import path
-from random import randint, randrange
 
 import settings as S
-from create_sets import create_sets
-from get_dna import get_dna
-from create_folder import create_folder
-from assess_dna import assess
-from top_scores import get_top_scores
-from ascend_dna import ascend_dna
-from complete_next_gen import complete_next_generation
+import create_sets
+import get_dna
+import create_folder
+import assess_dna
+import get_top_scores
+import ascend_dna
+import complete_next_gen
 
 if not path.exists(S.TEST_FILE):
     print("Test file not found.")
     exit(1)
+
 
 def main():
     """
@@ -42,22 +42,22 @@ def main():
         # Assess the sets and get the top scores.
         print("Assessing the sets and getting the top performers.")
         generation_top_scores = []
-        current_gen_folder = gen_folder # This we learned from fibonacci()
+        current_gen_folder = gen_folder  # This we learned from fibonacci()
         next_gen_folder = create_folder(S.GEN_FOLDER, generation + 1)
         gen_folder = next_gen_folder
         dna_scores = []
         for current_sets_file in range(S.POPULATION_SIZE - 1):
-            with open (current_gen_folder + '/dna_' + str(current_sets_file) + '_sets', 'r') as sets_file:
+            with open(current_gen_folder + '/dna_' + str(current_sets_file) + '_sets', 'r') as sets_file:
                 set_scores = []
                 for set_line in sets_file:
                     set_line = set_line.strip()
-                    set_scores.append(assess(list(set(set_line.split(',')))))
+                    set_scores.append(assess_dna(list(set(set_line.split(',')))))
             sets_file.close()
             dna_scores.append(int(mean(set_scores)))
         generation_top_scores = get_top_scores(dna_scores)
         print("Top score: " + str(max(dna_scores)) + " Average score: " + str(mean(dna_scores)))
-        with open (current_gen_folder + '/top_scores', 'w') as top_scores_file:
-            score_index=0
+        with open(current_gen_folder + '/top_scores', 'w') as top_scores_file:
+            score_index = 0
             for score in generation_top_scores:
                 top_scores_file.write(str(score_index) + ":" + str(score) + '\n')
                 score_index += 1
@@ -65,7 +65,8 @@ def main():
         print("Ascending top DNAs to the next generation.")
         ascend_dna(generation_top_scores, generation)
         print("Completing the next generation with new random DNAs.")
-        complete_next_generation(generation, len(generation_top_scores))
+        complete_next_gen(generation, len(generation_top_scores))
+
 
 if __name__ == '__main__':
     main()

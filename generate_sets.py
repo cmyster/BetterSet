@@ -13,20 +13,21 @@ type: str (path to file), int (number of sets to generate), int (number of digit
 returns: stdio (prints the generated sets)
 """
 
-HELP="Usage: python generate_sets.py --file=<DNA file path>\nOPTIONAL: --sets=<number of sets>\n          --digits=<number of digits in a set>"
+HELP = "Usage: python generate_sets.py --file=<DNA file path>\nOPTIONAL: --sets=<number of sets>\n          --digits=<number of digits in a set>"
+
 
 def main():
     if len(argv) < 2:
         print(HELP)
         return
-    
+
     if argv[1] == "--help":
         print(HELP)
         return
-    
-    size=S.SET_SIZE
-    length=S.SET_LENGTH
-        
+
+    size = S.SET_SIZE
+    length = S.SET_LENGTH
+
     for arg in argv[1:32]:
         if "--file=" in arg:
             dna_file = arg.split("=")[1]
@@ -40,17 +41,18 @@ def main():
             size = int(arg.split("=")[1])
         if "--digits=" in arg:
             length = int(arg.split("=")[1])
-    
-    dna=[]
+
+    dna = []
     with open(dna_file, "r") as f:
         dna = literal_eval(f.read())
     f.close()
-    
+
     for i in range(size):
-        line=""
+        line = ""
         for j in range(length):
             line += str(cd.calculate_digit(dna)) + ","
         print(line[:-1])    
-    
+
+
 if __name__ == "__main__":
     main()

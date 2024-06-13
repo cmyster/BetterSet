@@ -1,6 +1,7 @@
 from random import randint, randrange
 import settings as S
 
+
 def mutate_dna(temp_dna):
     """
     param: Mutates the DNA.

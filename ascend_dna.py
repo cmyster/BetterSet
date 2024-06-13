@@ -1,8 +1,11 @@
 from random import randint
 from ast import literal_eval
-from mix_dna import mix_dna
-from mutate_dna import mutate_dna
+
+import mix_dna
+import mutate_dna
+
 import settings as S
+
 
 def ascend_dna(generation_top_scores, generation):
     """
