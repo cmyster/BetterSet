@@ -9,9 +9,9 @@ DNA_MAX_LENGTH = 100         # Maximum length of a DNA.
 
 MINIMUM_DIGIT = 1            # Minimum digit that can be generated.
 MAXIMUM_DIGIT = 50           # Maximum digit that can be generated.
-POPULATION_SIZE = 10         # How many DNA are there in a generation.
+POPULATION_SIZE = 100        # How many DNA are there in a generation.
 GENERATIONS = 10             # How many generations are there in a simulation.
-SET_LENGTH = 6               # How many digits in a set.
+SET_LENGTH = 10              # How many digits in a set.
 
 """
 SET_SIZE means how many lines of sets are there for a given DNA. This is also how many times the DNA
@@ -63,3 +63,8 @@ The length is a pair of a number (letter) plus an operator.
 """
 CHANGE_MIN_LENGTH = 1        # Minimum length of pairs to change.
 CHANGE_MAX_LENGTH = 3        # Maximum length of pairs to change.
+
+"""
+Free threads  that are kept for other operations. This is used so that the code won't choke the CPU.
+"""
+FREE_THREADS = 2

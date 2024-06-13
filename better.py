@@ -8,6 +8,7 @@ import settings as S
 from ascend_dna import ascend_dna
 from assess_dna import assess_dna
 from complete_next_gen import complete_next_gen
+from core_count import core_count
 from create_folder import create_folder
 from create_sets import create_sets
 from get_dna import get_dna
@@ -28,6 +29,7 @@ def main():
     # Create the first generation.
     gen_folder = create_folder(S.GEN_FOLDER, 0)
     print("Creating cohort for generation 0")
+
     for member in range(S.POPULATION_SIZE):
         dna = get_dna(member)
         with open(gen_folder + '/dna_' + str(member), 'w') as dna_file:
