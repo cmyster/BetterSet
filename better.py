@@ -8,7 +8,6 @@ import settings as S
 from ascend_dna import ascend_dna
 from assess_dna import assess_dna
 from complete_next_gen import complete_next_gen
-from core_count import core_count
 from create_folder import create_folder
 from create_sets import create_sets
 from get_dna import get_dna

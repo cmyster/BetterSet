@@ -22,8 +22,7 @@ def get_dna(member):
             dna.append(str(digit))  # Saving as a string S. we can use eval later.
             operator = S.OPERATORS[getrandbits(2)]
             dna.append(operator)
-        # Last element is an operator and we want to remove it now.
-        dna.pop()
+        dna.pop()  # Last element is an operator and we want to remove it now.
         dna.append(key)
         if is_valid(dna):
             print("Generated DNA: " + str(member + 1) + " out of: " + str(S.POPULATION_SIZE))

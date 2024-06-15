@@ -1,8 +1,10 @@
 from random import randint
 from ast import literal_eval
 
+from duplicate_pairs import duplicate_pairs
 from mix_dna import mix_dna
 from mutate_dna import mutate_dna
+from reduct_pairs import reduct_pairs
 
 import settings as S
 
@@ -20,6 +22,10 @@ def ascend_dna(generation_top_scores, generation):
         dna_file.close()
         if randint(1, 100) <= S.DNA_MUTATION_RATE:
             mutate_dna(tmp_dna)
+        if randint(1, 100) <= S.DNA_DUPLICATION_RATE:
+            duplicate_pairs(tmp_dna)
+        if randint(1, 100) <= S.DNA_REDUCTION_RATE:
+            reduct_pairs(tmp_dna)
         if randint(1, 100) <= S.DNA_MIX_RATE:
             while True:
                 index_to_mix = generation_top_scores[randint(0, len(generation_top_scores) - 1)]

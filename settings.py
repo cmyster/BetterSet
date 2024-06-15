@@ -19,7 +19,7 @@ is tested to see if it can generate a number between MINIMUM_DIGIT and MAXIMUM_D
 it is considered healthy.
 Too small a size will not give good results, and too large a size will take a very long time to generate.
 """
-SET_SIZE = 100              # How many sets each DNA generates. Also how many tests each DNA has to pass.
+SET_SIZE = 2000              # How many sets each DNA generates. Also how many tests each DNA has to pass.
 
 OPERATORS = [
     '+', '-', '*', '/']      # 4 operators only, so we can use getrandbits(2) which is faster.
@@ -42,9 +42,9 @@ Consider that we generated a DNA that constantly guesses correctly 4 out of 5 nu
 But that 1 out of 5 is a number outside the range, so we deleted that DNA... A small amount of errors is not
 always bad.
 """
-SET_HEALTH = 95
+SET_HEALTH = 1950
 GEN_FOLDER = "generation-"   # The folder name for each generation.
-TEST_FILE = "test.csv"       # The file that contains the test sets.
+TEST_FILE = "./test.csv"       # The file that contains the test sets.
 
 
 """

@@ -22,11 +22,8 @@ the given range.
 Example of a test file (you can use generate_test.py):
 
 `1,2,3,4,5,6,7,8,9,10`
-
 `2,3,4,5,6,7,8,9,10,11`
-
 `3,4,5,6,7,8,9,10,11,12`
-
 `...`
 
 Example of a 'DNA':
@@ -41,4 +38,3 @@ TODO:
 2. Calculations are linear:
     a. Some functions can be delegated to different threads. This needs a waiter function.
     b. Some calculations should be vectorized.
-3. Parts of the DNA can also be duplicated and/or reduced in length (repetitions).
