@@ -3,7 +3,7 @@ from random import randrange
 import settings as S
 
 
-def reducnnt_pairs(temp_dna):
+def reduct_pairs(temp_dna):
     """
     param: Takes a DNA and duplicates pairs in a random location.
     type: list[str,...,[int]]
