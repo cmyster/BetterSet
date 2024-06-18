@@ -3,6 +3,7 @@
 from multiprocessing import Pool
 from numpy import mean
 from os import path
+from sys import exit
 from time import time
 
 import settings as S
@@ -65,7 +66,11 @@ def main():
                 set_scores = []
                 for set_line in sets_file:
                     set_line = set_line.strip()
-                    set_scores.append(assess_dna(list(set(set_line.split(',')))))
+                    assessment = assess_dna(list(set(set_line.split(','))))
+                    if assessment is None or assessment == 0:
+                        set_scores.append(0)
+                    else:
+                        set_scores.append(assessment)
             sets_file.close()
             dna_scores.append(int(mean(set_scores)))
         print("Assessing DNAs took " + str(time()-start) + " seconds.")

@@ -10,7 +10,7 @@ def get_top_scores(scores):
     # We need to keep the top score and its index.
     temp_scores = scores.copy()
     top_scores = []
-    for top_score in range(int((S.POPULATION_SIZE * S.ASCENDING) // 100)):
+    for top_score in range(S.POPULATION_SIZE - 1):
         top_scores.append(temp_scores.index(max(temp_scores)))
         temp_scores[temp_scores.index(max(temp_scores))] = 0
     return top_scores

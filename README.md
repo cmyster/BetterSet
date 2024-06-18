@@ -30,11 +30,3 @@ Example of a 'DNA':
 Pairs of numbers and operators, the last element is a list of indices that will be randomly
 modified.
 `['5', '-', '2', '*', '2', '-', '3', '/', '2', [0, 2]]`
-
-TODO:
-
-1. Instead of picking the top performing DNAs, use logarithmic distribution to have more of the
-   better-performing DNAs and less of the less-performing ones.
-2. Calculations are linear:
-    a. Some functions can be delegated to different threads. This needs a waiter function.
-    b. Some calculations should be vectorized.
