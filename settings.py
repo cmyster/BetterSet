@@ -10,7 +10,7 @@ DNA_MAX_LENGTH = 100         # Maximum length of a DNA.
 MINIMUM_DIGIT = 1            # Minimum digit that can be generated.
 MAXIMUM_DIGIT = 50           # Maximum digit that can be generated.
 POPULATION_SIZE = 100        # How many DNA are there in a generation.
-GENERATIONS = 10             # How many generations are there in a simulation.
+GENERATIONS = 100            # How many generations are there in a simulation.
 SET_LENGTH = 10              # How many digits in a set.
 
 """
@@ -50,7 +50,7 @@ TEST_FILE = "./test.csv"       # The file that contains the test sets.
 """
 Parameters for generational changes:
 """
-ASCENDING = 50               # Percentage of top DNAs that are taken from the previous generation.
+ASCENDING = 75               # Percentage of top DNAs that are taken from the previous generation.
 DNA_MUTATION_RATE = 1        # Percentage of the DNA that is mutated.
 DNA_MIX_RATE = 10            # Percentage of the DNAs that mix together (sort of sexual reproduction).
 DNA_DUPLICATION_RATE = 1     # Percentage of the DNAs that will have some of their instructions duplicated.
@@ -67,4 +67,4 @@ CHANGE_MAX_LENGTH = 3        # Maximum length of pairs to change.
 """
 Free threads  that are kept for other operations. This is used so that the code won't choke the CPU.
 """
-FREE_THREADS = 2
+FREE_THREADS = 3
