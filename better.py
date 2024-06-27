@@ -9,7 +9,7 @@ from time import time
 import settings as S
 from core_count import core_count
 from ascend_dna import ascend_dna
-from assess_dna import assess_dna
+from assess_set_line import assess_set_line
 from create_folder import create_folder
 from create_sets import create_sets
 from generate_member import generate_member
@@ -66,13 +66,17 @@ def main():
                 set_scores = []
                 for set_line in sets_file:
                     set_line = set_line.strip()
-                    assessment = assess_dna(list(set(set_line.split(','))))
+                    assessment = assess_set_line(list(set(set_line.split(','))))
                     if assessment is None or assessment == 0:
                         set_scores.append(0)
                     else:
                         set_scores.append(assessment)
             sets_file.close()
-            dna_scores.append(int(mean(set_scores)))
+            mean_score = mean(set_scores)
+            if mean_score is None:
+                dna_scores.append(0)
+            else:
+                dna_scores.append(int(mean(set_scores)))
         print("Assessing DNAs took " + str(time()-start) + " seconds.")
         start = time()
         generation_top_scores = get_top_scores(dna_scores)
