@@ -27,11 +27,12 @@ def main():
     type: None
     return: None
     """
+    CORE_COUNT=core_count()
     # Create the first generation.
     gen_folder = create_folder(S.GEN_FOLDER, 0)
     print("Creating members for generation 0")
     start = time()
-    pool = Pool(processes=core_count())
+    pool = Pool(processes=CORE_COUNT)
     member = 0
     for member in range(S.POPULATION_SIZE):
         pool.apply_async(generate_member, args=(member, gen_folder))
@@ -45,7 +46,7 @@ def main():
         # Create the sets for each DNA.
         print("Creating sets for generation " + str(generation))
         start = time()
-        pool = Pool(processes=core_count())
+        pool = Pool(processes=CORE_COUNT)
         member = 0
         for member in range(S.POPULATION_SIZE):
             pool.apply_async(create_sets, args=(generation, member,))
@@ -60,9 +61,10 @@ def main():
         gen_folder = next_gen_folder
         dna_scores = []
         start = time()
-        for current_sets_file in range(S.POPULATION_SIZE - 1):
-            with open(current_gen_folder + '/dna_' + str(current_sets_file) + '_sets', 'r') as sets_file:
-                print("Assessing sets for member: " + str(current_sets_file + 1))
+        for current_sets_file_index in range(S.POPULATION_SIZE - 1):
+            sets_file_path = current_gen_folder + '/dna_' + str(current_sets_file_index) + '_sets'
+            with open(sets_file_path, 'r') as sets_file:
+                print("Assessing sets for member: " + str(current_sets_file_index + 1))
                 set_scores = []
                 for set_line in sets_file:
                     set_line = set_line.strip()
