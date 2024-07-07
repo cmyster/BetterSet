@@ -27,7 +27,7 @@ def main():
     type: None
     return: None
     """
-    CORE_COUNT=core_count()
+    CORE_COUNT = core_count()
     # Create the first generation.
     gen_folder = create_folder(S.GEN_FOLDER, 0)
     print("Creating members for generation 0")
@@ -38,7 +38,7 @@ def main():
         pool.apply_async(generate_member, args=(member, gen_folder))
     pool.close()
     pool.join()
-    print("Generation 0 created in " + str(time()-start) + " seconds.")
+    print("Generation 0 was created in " + str(time()-start) + " seconds.")
     # Assess each generation, get the healthiest DNAs and create the next generation.
     for generation in range(S.GENERATIONS):
         gen_time = time()
@@ -56,13 +56,16 @@ def main():
         # Assess the sets and get the top scores.
         print("Assessing the sets and getting the top performers.")
         generation_top_scores = []
-        current_gen_folder = gen_folder  # This we learned from fibonacci()
+        current_gen_folder = gen_folder
         next_gen_folder = create_folder(S.GEN_FOLDER, generation + 1)
         gen_folder = next_gen_folder
         dna_scores = []
         start = time()
-        for current_sets_file_index in range(S.POPULATION_SIZE - 1):
+
+        for current_sets_file_index in range(S.POPULATION_SIZE):
             sets_file_path = current_gen_folder + '/dna_' + str(current_sets_file_index) + '_sets'
+            scores_file_path = current_gen_folder + '/dna_' + str(current_sets_file_index) + '_scores'
+            mean_file_path = current_gen_folder + '/dna_' + str(current_sets_file_index) + '_mean'
             with open(sets_file_path, 'r') as sets_file:
                 print("Assessing sets for member: " + str(current_sets_file_index + 1))
                 set_scores = []
@@ -73,15 +76,23 @@ def main():
                         set_scores.append(0)
                     else:
                         set_scores.append(assessment)
+                with open(scores_file_path, 'w') as scores_file:
+                    scores_file.write(str(set_scores) + "," + str(current_sets_file_index))
+                    scores_file.close()
             sets_file.close()
             mean_score = mean(set_scores)
-            if mean_score is None:
+            try:
+                dna_scores.append(int(mean_score))
+            except TypeError:
                 dna_scores.append(0)
-            else:
-                dna_scores.append(int(mean(set_scores)))
+            with open(mean_file_path, 'w') as mean_file:
+                mean_file.write(str(int(mean_score)))
+                mean_file.close()
+
         print("Assessing DNAs took " + str(time()-start) + " seconds.")
         start = time()
-        generation_top_scores = get_top_scores(dna_scores)
+        # Generating the top score indices for this generation.
+        generation_top_scores = get_top_scores(current_gen_folder)
         print("Top score: " + str(max(dna_scores)) + " Average score: " + str(mean(dna_scores)))
         with open(current_gen_folder + '/top_scores', 'w') as top_scores_file:
             score_index = 0
@@ -89,7 +100,7 @@ def main():
                 top_scores_file.write(str(score_index) + ":" + str(score) + '\n')
                 score_index += 1
         top_scores_file.close()
-        print("Getting scores took " + str(time()-start) + " seconds.")
+        print("Getting top scores took " + str(time()-start) + " seconds.")
         print("Ascending top DNAs to the next generation.")
         ascend_dna(generation_top_scores, generation)
         print("Completing the next generation with new random DNAs.")
